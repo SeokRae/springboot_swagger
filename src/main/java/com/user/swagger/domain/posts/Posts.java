@@ -1,4 +1,4 @@
-package com.user.swagger.domain.user;
+package com.user.swagger.domain.posts;
 
 import com.user.swagger.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
@@ -8,21 +8,28 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Builder // builder를 사용할수 있게 합니다.
+@Builder
 @Entity // jpa entity임을 알립니다.
 @Getter // user 필드값의 getter를 자동으로 생성합니다.
 @NoArgsConstructor // 인자없는 생성자를 자동으로 생성합니다.
-@AllArgsConstructor // 인자를 모두 갖춘 생성자를 자동으로 생성합니다.
-public class User extends BaseTimeEntity {
+@AllArgsConstructor
+public class Posts extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long msrl;
+    private Long id;
 
-    @Column(nullable = false, unique = true, length = 30)
-    private String userId;
+    @Column(length = 500, nullable = false)
+    private String title;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String content;
 
     @Column(nullable = false, length = 100)
-    private String name;
+    private String author;
 
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

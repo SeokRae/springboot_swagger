@@ -1,5 +1,6 @@
 package com.user.swagger.advice;
 
+import com.user.swagger.advice.exception.CPostsNotFoundException;
 import com.user.swagger.advice.exception.CUserNotFoundException;
 import com.user.swagger.config.response.CommonResult;
 import com.user.swagger.service.ResponseService;
@@ -20,6 +21,12 @@ public class ExceptionAdvice {
     @ExceptionHandler(CUserNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult userNotFoundException(HttpServletRequest request, CUserNotFoundException e) {
+        return responseService.getFailResult();
+    }
+
+    @ExceptionHandler(CPostsNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult postsNotFoundException(HttpServletRequest request, CPostsNotFoundException e) {
         return responseService.getFailResult();
     }
 }
