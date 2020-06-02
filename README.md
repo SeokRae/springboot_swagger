@@ -2,4 +2,4 @@
 
 ### Project Settings
 
-![swagger](img/swagger_photo.png)
+![swagger.png](img/swagger_photo.png "user post API")
