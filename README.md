@@ -2,4 +2,4 @@
 
 ### Project Settings
 
-![swagger](.img/swagger_photo.png)
+![swagger](img/swagger_photo.png)
