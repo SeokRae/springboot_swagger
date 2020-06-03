@@ -53,9 +53,9 @@ public class PostsController {
     }
 
     @ApiOperation(value = "게시물 수정", notes = "게시물 정보를 수정한다")
-    @PutMapping(value = "/posts/{postId}")
+    @PutMapping(value = "/posts")
     public SingleResult<Posts> update(
-            @ApiParam(value = "게시물번호", required = true, example = "1") @PathVariable Long postId,
+            @ApiParam(value = "게시물번호", required = true, example = "1") @RequestParam Long postId,
             @ApiParam(value = "게시물타이틀", required = true, example = "제목") @RequestParam String title,
             @ApiParam(value = "게시물내용", required = true, example = "내용") @RequestParam String content,
             @ApiParam(value = "작성자", required = true, example = "작성자") @RequestParam String author) {
