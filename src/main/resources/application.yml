@@ -53,7 +53,9 @@ spring:
 
 logging:
   level:
+    root: info
     io:
+      # swagger 관련 로그
       swagger:
         models:
           parameters:
