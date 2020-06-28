@@ -3,8 +3,8 @@ package com.user.swagger.config.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,6 +13,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @RequiredArgsConstructor
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -41,25 +42,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 // 다음 리퀘스트에 대한 사용권한 체크
-                .authorizeRequests()
-                // 가입 및 인증 주소는 누구나 접근가능
-                .antMatchers("/*/signin", "/*/signup").permitAll()
-
-                .antMatchers(
-                        HttpMethod.GET, // GET요청 resources는 누구나 접근가능
-                        "/exception/**", // 예외처리에 대한 URL 호출 누구나 접근 가능
-                        "helloword/**", // hellowworld로 시작하는 resources는 누구나 접근 가능
-                        "/favicon.ico"
-                ).permitAll()
-                // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
-                .anyRequest().hasRole("USER")
-                // Admin 권한을 가진 사용자들만 접근이 가능한 resources 설정
-                .antMatchers("/*/users")
-                .hasRole("ADMIN")
-                // 그 외 resources에 대해서는 인증된 회원만 접근 가능
-                .anyRequest()
-                .hasRole("USER")
-            .and()
+//                .authorizeRequests()
+//                // 가입 및 인증 주소는 누구나 접근가능
+//                .antMatchers("/*/signin", "/*/signup").permitAll()
+//
+//                .antMatchers(
+//                        HttpMethod.GET, // GET요청 resources는 누구나 접근가능
+//                        "/exception/**", // 예외처리에 대한 URL 호출 누구나 접근 가능
+//                        "helloword/**", // hellowworld로 시작하는 resources는 누구나 접근 가능
+//                        "/favicon.ico"
+//                ).permitAll()
+//                // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
+//                .anyRequest().hasRole("USER")
+//                // Admin 권한을 가진 사용자들만 접근이 가능한 resources 설정
+//                .antMatchers("/*/users")
+//                .hasRole("ADMIN")
+//                // 그 외 resources에 대해서는 인증된 회원만 접근 가능
+//                .anyRequest()
+//                .hasRole("USER")
+//            .and()
                 // 접근 불가 redirect
                 .exceptionHandling()
                 .accessDeniedHandler(new CustomAccessDeniedHandler())

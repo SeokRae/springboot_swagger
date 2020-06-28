@@ -9,6 +9,7 @@ import com.user.swagger.domain.user.UserRepository;
 import com.user.swagger.service.ResponseService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,7 @@ public class UserController {
         return responseService.getListResult(userRepository.findAll());
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header")
     })
@@ -48,6 +50,7 @@ public class UserController {
         return responseService.getSingleResult(userRepository.findByUid(id).orElseThrow(CUserNotFoundException::new));
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
@@ -63,6 +66,7 @@ public class UserController {
         return responseService.getSingleResult(userRepository.save(user));
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })

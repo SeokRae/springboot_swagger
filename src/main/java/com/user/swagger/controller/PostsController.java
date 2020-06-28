@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class PostsController {
 
     private final PostsService postsService;
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiOperation(value = "모든 게시물 조회", notes = "모든 게시물을 조회한다")
     @GetMapping(value = "")
     public List<PostsListResponseDto> findAllPosts() {
@@ -38,6 +40,7 @@ public class PostsController {
         return postsService.findById(postId);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiOperation(value = "게시물 등록", notes = "게시물을 등록한다.")
     @PostMapping(value = "")
     public SingleResult<Posts> save(
@@ -52,6 +55,7 @@ public class PostsController {
         return postsService.save(requestDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiOperation(value = "게시물 수정", notes = "게시물 정보를 수정한다")
     @PutMapping(value = "")
     public SingleResult<Posts> update(
@@ -68,6 +72,7 @@ public class PostsController {
         return postsService.update(postId, requestDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiOperation(value = "게시물 삭제", notes = "게시물 삭제한다")
     @DeleteMapping(value = "{postId}")
     public SingleResult<Long> delete(
