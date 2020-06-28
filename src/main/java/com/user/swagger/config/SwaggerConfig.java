@@ -43,7 +43,7 @@ public class SwaggerConfig {
                 // API spec이 작성되어 있는 패키지를 지정
                 .apis(RequestHandlerSelectors.basePackage("com.user.swagger.controller"))
                 // apis()로 선택되어진 API중 특정 path 조건에 맞는 API들을 다시 필터링하여 문서화
-                .paths(PathSelectors.ant("/api/**"))
+                .paths(PathSelectors.ant("/v1/**"))
                 .build()
                 // 기본으로 세팅되는 200,401,403,404 메시지를 표시 하지 않고 컨트롤러에서 명시
                 .useDefaultResponseMessages(false)

@@ -1,9 +1,6 @@
 package com.user.swagger.config.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,6 +38,7 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
                 .setIssuedAt(now) // 토큰 발행일자
                 .setExpiration(new Date(now.getTime() + tokenValidMilisecond)) // set Expire Time
                 .signWith(SignatureAlgorithm.HS256, secretKey) // 암호화 알고리즘, secret값 세팅
+                .setHeaderParam("typ", Header.JWT_TYPE) // jwt Header 타입
                 .compact();
     }
     // Jwt 토큰으로 인증 정보를 조회

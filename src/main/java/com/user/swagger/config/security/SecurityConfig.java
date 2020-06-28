@@ -44,11 +44,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 가입 및 인증 주소는 누구나 접근가능
                 .antMatchers("/*/signin", "/*/signup").permitAll()
-                // hellowworld로 시작하는 GET요청 리소스는 누구나 접근가능
-                .antMatchers(HttpMethod.GET, "helloword/**").permitAll()
+
+                .antMatchers(
+                        HttpMethod.GET, // GET요청 resources는 누구나 접근가능
+                        "/exception/**", // 예외처리에 대한 URL 호출 누구나 접근 가능
+                        "helloword/**", // hellowworld로 시작하는 resources는 누구나 접근 가능
+                        "/favicon.ico"
+                ).permitAll()
                 // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
                 .anyRequest().hasRole("USER")
-                    .and()
+                // Admin 권한을 가진 사용자들만 접근이 가능한 resources 설정
+                .antMatchers("/*/users")
+                .hasRole("ADMIN")
+                // 그 외 resources에 대해서는 인증된 회원만 접근 가능
+                .anyRequest()
+                .hasRole("USER")
+            .and()
+                // 접근 불가 redirect
+                .exceptionHandling()
+                .accessDeniedHandler(new CustomAccessDeniedHandler())
+            .and()
+                // 유효하지 않은 JWT
+                .exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+            .and()
                 // jwt token 필터를 id/password 인증 필터 전에 넣는다
                 .addFilterBefore(
                         new JwtAuthenticationFilter(jwtTokenProvider),
@@ -58,6 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override // ignore check swagger resource
     public void configure(WebSecurity web) {
+        // security 적용으로 인해 swagger 접근제한 풀기
         web.ignoring()
                 .antMatchers(
                         "/v2/api-docs",

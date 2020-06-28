@@ -1,6 +1,7 @@
 package com.user.swagger.controller;
 
 import com.user.swagger.advice.exception.CEmailSignInFailedException;
+import com.user.swagger.advice.exception.CUserDuplicatedUserIdException;
 import com.user.swagger.config.response.CommonResult;
 import com.user.swagger.config.response.SingleResult;
 import com.user.swagger.config.security.JwtTokenProvider;
@@ -18,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
-@Api(tags = {"1. Sign"})
+@Api(value = "SignController v1", tags = {"3. Sign"}, description = "회원 접근관련 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/v1")
+@RequestMapping(value = "/v1")
 public class SignController {
 
     private final UserRepository userRepository;
@@ -51,7 +52,8 @@ public class SignController {
             @ApiParam(value = "회원ID : 이메일", required = true) @RequestParam String id,
             @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
             @ApiParam(value = "이름", required = true) @RequestParam String name) {
-
+        // user 존재
+        User user = userRepository.findByUid(id).orElseThrow(CUserDuplicatedUserIdException::new);
         userRepository.save(User.builder()
                 .uid(id)
                 .password(passwordEncoder.encode(password))

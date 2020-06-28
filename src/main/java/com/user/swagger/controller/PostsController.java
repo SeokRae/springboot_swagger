@@ -19,7 +19,7 @@ import java.util.List;
 @Api(value = "PostsController v1", tags = {"2. Posts"}, description = "포스트 관련 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/v1/posts")
+@RequestMapping(value = "/v1/posts")
 public class PostsController {
 
     private final PostsService postsService;
