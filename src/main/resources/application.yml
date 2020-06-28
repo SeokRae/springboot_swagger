@@ -2,16 +2,54 @@
 server:
   port: 8082
 
+# 메시지 관련 설정파일 추가
+spring.profile.include: jwt
+
 # spring jdbc
 spring:
+
   h2:
     console:
       enabled: true
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    show_sql: true
+      database-platform: org.hibernate.dialect.H2Dialect
+      showSql: true
+
+#          dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#      show_sql: true
+
+
+  # 데이터베이스 설정
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/test
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    jpa:
+#      database-platform: org.hibernate.dialect.H2Dialect
+#      showSql:true
+#      properties:
+#        hibernate:
+#          hbm2ddl:
+#            auto: none
+
+  # 메시지 관련 설정
+  messages:
+    # MessasgeFormat을 전체 메시지에 적용할 것인지 여부
+    always-use-message-format: false
+    # message 파일을 여러개 사용할 경우 콤마로 구분해서 여러개의 basename을 설정할 수 있다.
+    basename: i18n/exception
+    # 캐시 주기 설정, 기본 값 forever
+    # cache-duration:
+    # 인코딩 방식
+    encoding: UTF-8
+    # 감지된 locale에 대한 파일이 없는 경우
+    # 설정값 true : system locale 사용
+    # 설정값 false : application-messages.yml 파일을 사용
+    fallback-to-system-locale: true
+    # 메시지를 찾지 못했을 때, 예외 처리 대신 메시지 코드를 그대로 반환
+    use-code-as-default-message: false
 
 logging:
   level:

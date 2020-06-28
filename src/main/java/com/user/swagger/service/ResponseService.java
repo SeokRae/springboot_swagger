@@ -56,6 +56,14 @@ public class ResponseService {
         result.setMsg(CommonResponse.FAIL.getMsg());
         return result;
     }
+    // 실패 결과만 처리하는 메소드 code, msg를 받을수 있도록 수정
+    public CommonResult getFailResult(int code, String msg) {
+        CommonResult result = new CommonResult();
+        result.setSuccess(false);
+        result.setCode(code);
+        result.setMsg(msg);
+        return result;
+    }
     // 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
     private void setSuccessResult(CommonResult result) {
         result.setSuccess(true);

@@ -1,45 +1,40 @@
-buildscript {
-    ext {
-        springBootVersion = '2.1.9.RELEASE'
-        springfoxVersion =  '2.9.2'
-        swaggerVersion = '1.5.21'
-    }
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
+plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'java'
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-group 'com.user'
-version '1.0-SNAPSHOT'
+group = 'com.user'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
-    compile("io.springfox:springfox-swagger2:${springfoxVersion}")
-    compile("io.springfox:springfox-swagger-ui:${springfoxVersion}")
-    compile("io.springfox:springfox-data-rest:${springfoxVersion}")
+    implementation 'io.springfox:springfox-swagger2:2.6.1'
+    implementation 'io.springfox:springfox-swagger-ui:2.6.1'
 
-    // 이슈로 인한 의존성 추가 https://github.com/springfox/springfox/issues/2265
-    compile("io.swagger:swagger-annotations:${swaggerVersion}")
-    compile("io.swagger:swagger-models:${swaggerVersion}")
+    implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
 
-    runtime("com.h2database:h2")
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
+//    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
