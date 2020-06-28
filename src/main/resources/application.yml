@@ -1,21 +1,22 @@
 # tomcat server port
-server:
-  port: 8082
+#server:
+#  port: 8082
 
 # 메시지 관련 설정파일 추가
 spring.profile.include: jwt
 
 # spring jdbc
 spring:
-
-  h2:
-    console:
-      enabled: true
-  jpa:
-    properties:
-      hibernate:
-      database-platform: org.hibernate.dialect.H2Dialect
-      showSql: true
+  profiles:
+    active: local
+#  h2:
+#    console:
+#      enabled: true
+#  jpa:
+#    properties:
+#      hibernate:
+#      database-platform: org.hibernate.dialect.H2Dialect
+#      showSql: true
 
 #          dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 #      show_sql: true
@@ -53,7 +54,6 @@ spring:
 
 logging:
   level:
-    root: info
     io:
       # swagger 관련 로그
       swagger:
