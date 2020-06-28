@@ -72,7 +72,7 @@ public class PostsController {
         return postsService.update(postId, requestDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "게시물 삭제", notes = "게시물 삭제한다")
     @DeleteMapping(value = "{postId}")
     public SingleResult<Long> delete(
